@@ -32,6 +32,14 @@ button {
     background: darkred;
 }
 
+#increment-btn:hover{
+    background: pink;
+}
+
+#decrement-btn {
+    background: green;
+}
+
 #save-btn {
     background: darkgreen;
 }

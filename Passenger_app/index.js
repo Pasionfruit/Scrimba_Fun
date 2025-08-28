@@ -28,5 +28,12 @@ function increment() {
     document.getElementById("count-el").innerText = passenger;
 }
 
+function decrement() {
+    console.log("decrement button was clicked")
+    passenger = passenger - 1
+    console.log(passenger)
+    document.getElementById('count-el').innerText = passenger;
+}
+
 
 
