@@ -35,5 +35,28 @@ function decrement() {
     document.getElementById('count-el').innerText = passenger;
 }
 
+// Laps Challenge
+let lap1 = 34
+let lap2 = 33
+let lap3 = 36
+
+function totalLaps() {
+    let total = lap1 + lap2 + lap3
+    console.log(total)
+
+    foreach
+}
+
+let lapsCompleted = 0
+
+function addLap() {
+    lapsCompleted = lapsCompleted + 1
+}
+
+addLap()
+addLap()
+addLap()
+
+console.log(lapsCompleted)
 
 
