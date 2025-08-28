@@ -18,3 +18,15 @@ bonusPoint = bonusPoint + 45
 console.log(bonusPoint)
 
 console.log(count)
+
+let passenger = 0
+
+function increment() {
+    console.log("button was clicked")
+    passenger = passenger += 1
+    console.log(passenger)
+    document.getElementById("count-el").innerText = passenger;
+}
+
+
+
