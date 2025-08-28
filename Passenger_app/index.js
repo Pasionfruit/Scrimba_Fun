@@ -43,23 +43,25 @@
 let countEl = document.getElementById("count-el")
 let passenger = 0
 let logs = document.getElementById("logs")
-let stringLogs = "Total: 0"
+let stringLogs = "Previous entries: "
 
 function increment() {
     // console.log("button was clicked")
-    passenger = passenger + 1
+    passenger += 1
     countEl.innerText = passenger
 }
 
 function decrement() {
-    passenger = passenger - 1
+    passenger -= 1
     countEl.innerText = passenger
 }
 
 function save() {
-    stringLogs = stringLogs + ", " + passenger
+    stringLogs += passenger + ", " 
     console.log(stringLogs)
-    logs.innerText = stringLogs
+    logs.textContent = stringLogs
+    countEl.innerText = 0
+    passenger = 0
 }
 
 
