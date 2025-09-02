@@ -54,10 +54,7 @@ function renderGame() {
         cardsEl.textContent += cards[i] + " "
     }
 
-    houseEl.textContent = "House Cards: "
-    for (let i = 0; i < houseCards.length; i++){
-        houseEl.textContent += houseCards[i] + " "
-    }
+    houseEl.textContent = "House Cards: " + houseCards[0] + " ?"
 
     // Bid logic
     totalBid = 10
@@ -65,8 +62,10 @@ function renderGame() {
 
     bidEl.textContent = "bid: $" + totalBid
     sumEl.textContent = "Sum: " + sum
-    houseSumEl.textContent = "House Sum: " + houseSum
+    houseSumEl.textContent = "House Sum: ?"
     playerEl.textContent = player.name + ": $" + player.chips
+
+    console.log(sum)
 
     if (sum <= 20) {
         message = "Do you want to draw a new card?"
@@ -79,8 +78,6 @@ function renderGame() {
         message = "You're out of the game!"
         isAlive = false
     }
-
-    play
     messageEl.textContent = message
 }
 
@@ -91,4 +88,12 @@ function newCard() {
         cards.push(card)
         renderGame()        
     }
+}
+
+function stay() {
+    cardsEl.textContent = "Cards: "
+    for (let i = 0; i < cards.length; i++) {
+        cardsEl.textContent += cards[i] + " "
+    }
+    houseSumEl.textContent = "House Sum: ?" + houseSum
 }
