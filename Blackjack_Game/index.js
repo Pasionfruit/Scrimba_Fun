@@ -22,6 +22,7 @@ let bidEl = document.getElementById("bid-el")
 
 let startGameBtn = document.getElementById("startGame-btn")
 let newCardBtn = document.getElementById("newCard-btn")
+let stayBtn = document.getElementById("stay-btn")
 
 let totalBid = 0
 bidEl.textContent = "bid: $" + totalBid
@@ -40,6 +41,7 @@ function getRandomCard() {
 
 function startGame() {
     isAlive = true
+    win = false
     let houseFirstCard = getRandomCard()
     let houseSecondCard = getRandomCard()
     let firstCard = getRandomCard()
@@ -51,16 +53,16 @@ function startGame() {
 
     displayCards()
     newCardBtn.disabled = false
+    startGameBtn.disabled = true
 
     houseEl.textContent = "House Cards: " + houseCards[0] + " ?"
-    houseSumEl.textContent += " ?"
+    houseSumEl.textContent = "House Sum: ?"
 
     // Bid logic
     totalBid = 10
     player.chips -= totalBid
     bidEl.textContent = "bid: $" + totalBid
     playerEl.textContent = player.name + ": $" + player.chips
-    startGameBtn.blocked = true
 
     if (sum <= 20) {
         message = "Do you want to draw a new card?"
@@ -98,7 +100,10 @@ function gameOver(totalBid, win) {
     } else {
         message = "You've lost!"
     }
+    houseSum = 0
     messageEl.textContent = message
+    startGameBtn.disabled = false
+    newCardBtn.disabled = true
 }
 
 function newCard() {
@@ -119,28 +124,24 @@ function newCard() {
 
 function stay() {
     newCardBtn.disabled = true
-
     displayCards()
     displayHouseCards()
 
-    while (houseSumEl < 17) {
-        if (houseSumEl > 21) {
-            win
-            startGameBtn.disabled = false
-            break
-        } 
+    while (houseSum < 17) {
         newEl = getRandomCard()
-        houseCards.append(newEl)
-        houseSumEl += newEl
+        houseCards.push(newEl)
+        houseSum += newEl
         displayHouseCards()  
     }
-    if (houseSumEl >= sumEl){
+
+    if (houseSum > 21) {
+        win = true
+        gameOver(totalBid, win)
+    } else if (houseSum >= sum){
         win = false
         gameOver(totalBid, win)
     } else {
         win = true
         gameOver(totalBid, win)
     }
-    startGameBtn.disabled = true
-    messageEl.textContent = message
 }
