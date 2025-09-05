@@ -8,7 +8,7 @@ let cards = []
 let houseSum = 0
 let sum = 0
 
-let hasBlackJack = false
+let win = false
 let isAlive = false
 
 let message = ""
@@ -19,6 +19,9 @@ let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 let playerEl = document.getElementById("player-el")
 let bidEl = document.getElementById("bid-el")
+
+let startGameBtn = document.getElementById("startGame-btn")
+let newCardBtn = document.getElementById("newCard-btn")
 
 let totalBid = 0
 bidEl.textContent = "bid: $" + totalBid
@@ -45,55 +48,99 @@ function startGame() {
     houseSum = houseFirstCard + houseSecondCard
     cards = [firstCard, secondCard]
     sum = firstCard + secondCard
-    renderGame()
-}
 
-function renderGame() {
-    cardsEl.textContent = "Cards: "
-    for (let i = 0; i < cards.length; i++) {
-        cardsEl.textContent += cards[i] + " "
-    }
+    displayCards()
+    newCardBtn.disabled = false
 
     houseEl.textContent = "House Cards: " + houseCards[0] + " ?"
+    houseSumEl.textContent += " ?"
 
     // Bid logic
     totalBid = 10
     player.chips -= totalBid
-
     bidEl.textContent = "bid: $" + totalBid
-    sumEl.textContent = "Sum: " + sum
-    houseSumEl.textContent = "House Sum: ?"
     playerEl.textContent = player.name + ": $" + player.chips
-
-    console.log(sum)
+    startGameBtn.blocked = true
 
     if (sum <= 20) {
         message = "Do you want to draw a new card?"
     } else if (sum === 21) {
-        message = "You've got Blackjack!"
-        hasBlackJack = true
+        win = true
+        gameOver(totalBid, win)
+    } else {
+        win = false
+        gameOver(totalBid, win)
+    }
+}
+
+function displayCards() {
+    cardsEl.textContent = "Cards: "
+    for (let i = 0; i < cards.length; i++) {
+        cardsEl.textContent += cards[i] + " "
+    }
+    sumEl.textContent = "Sum: " + sum
+}
+
+function displayHouseCards() {
+    houseEl.textContent = "House Cards: "
+    for (let i = 0; i < houseCards.length; i++) {
+        houseEl.textContent += houseCards[i] + " "
+    }
+    houseSumEl.textContent = "House Sum: " + houseSum
+}
+
+function gameOver(totalBid, win) {
+    displayHouseCards()
+    if (win) {
+        message = "You've got win!"
         player.chips += (totalBid * 2)
         playerEl.textContent = player.name + ": $" + player.chips
     } else {
-        message = "You're out of the game!"
-        isAlive = false
+        message = "You've lost!"
     }
     messageEl.textContent = message
 }
 
 function newCard() {
-    if (isAlive === true && hasBlackJack === false) {
+    if (isAlive === true && win === false) {
         let card = getRandomCard()
         sum += card
         cards.push(card)
-        renderGame()        
+        displayCards()
+        if (sum > 21){
+            win = false 
+            gameOver(totalBid, win)
+        } else if (sum === 21) {
+            win = true
+            gameOver(totalBid, win)
+        }
     }
 }
 
 function stay() {
-    cardsEl.textContent = "Cards: "
-    for (let i = 0; i < cards.length; i++) {
-        cardsEl.textContent += cards[i] + " "
+    newCardBtn.disabled = true
+
+    displayCards()
+    displayHouseCards()
+
+    while (houseSumEl < 17) {
+        if (houseSumEl > 21) {
+            win
+            startGameBtn.disabled = false
+            break
+        } 
+        newEl = getRandomCard()
+        houseCards.append(newEl)
+        houseSumEl += newEl
+        displayHouseCards()  
     }
-    houseSumEl.textContent = "House Sum: ?" + houseSum
+    if (houseSumEl >= sumEl){
+        win = false
+        gameOver(totalBid, win)
+    } else {
+        win = true
+        gameOver(totalBid, win)
+    }
+    startGameBtn.disabled = true
+    messageEl.textContent = message
 }
