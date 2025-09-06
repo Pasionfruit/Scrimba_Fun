@@ -10,7 +10,14 @@
         <p id="cards-el">Cards:</p>
         <p id="sum-el">Sum:</p>
         <button onclick="startGame()" id="startGame-btn">START GAME</button>
-        <!-- <button onclick="bid()">BID 10</button> -->
+        <button onclick="bid()">INCREASE BID</button>
+        
+        <div id="popup" style="display:none; position:fixed; top:30%; left:40%; background:#fff; border:1px solid #333; padding:20px; z-index:1000;">
+            <p>Increase you bid!</p>
+            <input></input>
+            <button onclick="closePopup()">Close</button>
+        </div>
+
         <button onclick="newCard()" id="newCard-btn">HIT</button>
         <button onclick="stay()" id="stay-btn">STAY</button>
         <p id="bid-el"></p>

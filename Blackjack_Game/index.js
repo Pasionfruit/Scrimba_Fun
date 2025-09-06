@@ -145,3 +145,24 @@ function stay() {
         gameOver(totalBid, win)
     }
 }
+
+function showPopup() {
+    document.getElementById("popup").style.display = "block";
+}
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+function bidMore() {
+    tempBid = 0
+
+    if (tempBid > player.chips){
+        message = "Not enough funds"
+
+    }
+
+    totalBid = 123
+    player.chips -= totalBid
+    bidEl.textContent = "bid: $" + totalBid
+    playerEl.textContent = player.name + ": $" + player.chips
+}
